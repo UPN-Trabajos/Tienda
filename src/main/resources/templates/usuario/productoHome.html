@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>A&C ACCESORIOS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+        <!--SweetAlert2-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function Eliminar() //Recibe la etiqueta 'a' con nomMascota 'opcion'
+            {
+//              Le da prioridad a esta funcion
+                event.preventDefault();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                                )
+                                .then((result) => {
+                                    if (result.isConfirmed) {
+                                        const formulario = document.getElementById('delete');
+                                        formulario.submit();
+                                    }
+                                })
+                    }
+                })
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <div th:include="usuario/menuUser.html::header1" th:if="${sesion==null}">  </div>
+
+        <!-- Page Content -->
+        <div class="container">
+
+
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3">
+                A&C Accesorios <small>Producto</small>
+            </h1>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item active">Producto</li>
+            </ol>
+
+            <!-- Blog Post -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a > <img class="img-fluid rounded"
+                                      th:src="@{/images/{img} (img=${producto.imagen})}"  alt="">
+                            </a>
+                        </div>
+                        <div class="col-lg-6 align-items-center">
+                            <form th:action="@{/cart}" method="POST">
+                                <br/>
+                                <input type="hidden" th:value="${producto.id}" name="id">
+                                <h2 class="card-title text-center" th:text="${producto.nombre}"></h2>
+                                <br/>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><h5 th:text=" 'Precio: '+ ${producto.precio}"></h5></li>
+                                    <li class="list-group-item">
+                                        <p th:text=" 'Descripción: '+ ${producto.descripcion}"></p>
+                                    </li>
+                                    <li class="list-group-item"><h6>
+                                            Cantidad: <input type="number" id="cantidad" name="cantidad" autocomplete="off"
+                                                             min="1" max="5" value="1">
+                                        </h6></li>
+                                </ul>
+
+                                <br/>
+                                <button type="submit"  class="btn btn-warning">Añadir al carrito </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <br/><br/><br/>
+        <div th:include="usuario/menuUser.html::footer">  </div>
+
+    </body>
+
+</html>

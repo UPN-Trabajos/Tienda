@@ -1,0 +1,15 @@
+server:
+  port: 8090
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/tienda
+    ##url: jdbc:postgresql://192.190.42.193:5432/grupocienciasbd
+#    url: jdbc:postgresql://199.89.53.49:5432/ecobusbd
+#    username: us_ecobus_ap
+    username: postgres
+    password: 123456789
+#    password: '@@us_ecobus_app_20230418$$$@@@'

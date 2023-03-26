@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Lista de Productos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <!-- Iconos -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <!--SweetAlert2-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function Registrar()
+            {
+                event.preventDefault();
+
+                const nom = document.getElementById("nom").value;
+                const desc = document.getElementById("desc").value;
+                const cant = document.getElementById("cant").value;
+                const prec = document.getElementById("prec").value;
+                const cat = document.getElementById("cat").value;
+                const img = document.getElementById("img").value;
+
+
+                if (nom == "" || desc == "" || cant == "" || prec == "" || cat == "")
+                {
+                    //Puedes aqui poner una alerta: llene los campos
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    });
+
+                } else
+                {
+                    Swal.fire({
+                        title: 'Do you want to save the changes?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        denyButtonText: `Don't save`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Saved!',
+                                text: '',
+                                icon: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const formulario = document.getElementById("registrar");
+                                    formulario.submit();
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info');
+                        }
+                    });
+                }
+            }
+
+            function Actualizar()
+            {
+                event.preventDefault();
+
+                //const id = document.getElementById("id").value;
+                const nom = document.getElementById("nomx").value;
+                const desc = document.getElementById("descx").value;
+                const cant = document.getElementById("cantx").value;
+                const prec = document.getElementById("precx").value;
+                const cat = document.getElementById("catx").value;
+                const img = document.getElementById("imgx").value;
+
+
+                if (nom == "" || desc == "" || cant == "" || prec == "" || cat == "")
+                {
+                    //Puedes aqui poner una alerta: llene los campos
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    });
+
+                } else
+                {
+                    Swal.fire({
+                        title: 'Do you want to save the changes?',
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        denyButtonText: `Don't save`,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Saved!',
+                                text: '',
+                                icon: 'success',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const formulario = document.getElementById("actualizar");
+                                    formulario.submit();
+                                }
+                            });
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info');
+                        }
+                    });
+                }
+            }
+
+            function Eliminar(opcion)
+            {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            icon: 'success',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = opcion.href;
+                            }
+                        });
+
+                    }
+                });
+            }
+
+
+            function Editar()
+            {
+                const exampleModal = document.getElementById('modalEditar');
+                exampleModal.addEventListener('show.bs.modal', event => {
+                    // Button that triggered the modal
+                    const button = event.relatedTarget;
+
+                    //Datos
+                    const id = button.getAttribute('data-bs-id');
+                    const nom = button.getAttribute('data-bs-nom');
+                    const desc = button.getAttribute('data-bs-desc');
+                    const cant = button.getAttribute('data-bs-cant');
+                    const prec = button.getAttribute('data-bs-prec');
+                    const idc = button.getAttribute('data-bs-idc');
+                    const img = button.getAttribute('data-bs-img');
+
+                    //Campos
+                    const campoId = document.getElementById('id');
+                    const campoNom = document.getElementById('nomx');
+                    const campoDesc = document.getElementById('descx');
+                    const campoCant = document.getElementById('cantx');
+                    const campoPrec = document.getElementById('precx');
+                    const campoCat = document.getElementById('catx');
+                    const campoImg = document.getElementById('imgx');
+
+                    //Colocar los datos a los campos
+                    campoId.value = id;
+                    campoNom.value = nom;
+                    campoDesc.value = desc;
+                    campoCant.value = cant;
+                    campoPrec.value = prec;
+                    campoCat.value = idc;
+                    campoImg.value = img;
+                });
+            }
+
+            function Buscando() {
+                event.preventDefault();
+                let timerInterval
+                Swal.fire({
+                    title: 'Buscando...',
+                    html: 'Progreso: <b></b> %',
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                        const formulario = document.getElementById('busc');
+                        formulario.submit();
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body onload="Editar()">
+        <div th:include="administrador/menuAdmin.html::header">  </div>
+
+        <div class="container"> 
+
+            <h1 class="mt-4 mb-3">
+                A&C Accesorios <small>/ Productos</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/administrador}">Home</a></li>
+                <li class="breadcrumb-item active">Ver Productos</li>
+            </ol>
+
+            <hr>
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="bi bi-plus-circle"></i></button>
+                    <a class="btn btn-warning"  th:href="@{/productos/orden_asc}"><i class="bi bi-sort-up"></i></a>
+                    <a class="btn btn-warning"  th:href="@{/productos/orden_desc}"><i class="bi bi-sort-down"></i></a>
+                </div>
+                <div class="col-4">
+                    <input type="hidden">
+                </div>
+                <div class="col-5">
+                    <form class="d-flex" role="search" th:action="@{/productos/buscarProducto}" method="POST" id="busc">
+                        <input class="form-control me-2" name="dato" required="required" type="text" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-warning d-none d-md-inline-block " type="submit" onclick="return Buscando()"><i class="bi bi-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <br/>
+            <table class="table table-striped">
+                <tr class="table-dark">
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Inventario</th>
+                    <th>Precio</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+                <tr th:each="Producto, status : ${productos}" th:if="${Producto.nombre != ''}">
+                    <td th:text="${Producto.id}"></td> <!--orden que se muestran los registros-->
+                    <td th:text="${Producto.nombre}"></td>
+                    <td th:text="${Producto.descripcion}"></td>
+                    <td th:text="${Producto.cantidad}"></td>
+                    <td th:text="${Producto.precio}"></td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditar" th:attr="data-bs-id=${Producto.id},data-bs-idc=${Producto.categoria.id},data-bs-nom=${Producto.nombre},data-bs-desc=${Producto.descripcion},data-bs-cant=${Producto.cantidad},data-bs-prec=${Producto.precio}" ><i class="bi bi-pencil-square"></i></button>
+                    </td>
+                    <td>
+                        <a onclick="return Eliminar(this)" th:href="@{/productos/eliminarProducto (id=${Producto.id})}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div> 
+
+        <!-- Model REGISTRAR -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Producto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/productos/guardarProducto}" enctype="multipart/form-data" method="POST" id="registrar">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <input type="text" name="nom" id="nom" class="form-control" placeholder="Ingrese nombre" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Categoria:</label>
+                                <select name="cat" id="cat" class="form-control">
+                                    <option value="">Seleccione</option>
+                                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Descripción:</label>
+                                <textarea class="form-control" name="desc" id="desc" placeholder="Ingrese descripción"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Cantidad: </label>
+                                <input type="number" name="cant" id="cant" class="form-control" placeholder="Ingrese cantidad" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Precio:</label>
+                                <input type="number" name="prec" id="prec" class="form-control" placeholder="Ingrese precio" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="control-label col-sm-2" for="img">Imagen:</label>
+                                <input type="file" class="form-control-file" id="img" name="img">
+                            </div> 
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="return Registrar()" type="button" class="btn btn-warning">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model EDITAR/ACTUALIZAR -->
+        <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Producto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/productos/actualizarProducto}" enctype="multipart/form-data" method="POST" id="actualizar">
+                            <input type="hidden" name="id" id="id">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                                <input type="text" name="nombre" id="nomx" class="form-control" placeholder="Ingrese nombre" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Categoria</label>
+                                <select name="cat" id="catx" class="form-control">
+                                    <option value="">Seleccione</option>
+                                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Descripción:</label>
+                                <textarea class="form-control" name="descripcion" id="descx" placeholder="Ingrese descripción"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Cantidad: </label>
+                                <input type="number" name="cantidad" id="cantx" class="form-control" placeholder="Ingrese cantidad" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Precio:</label>
+                                <input type="number" name="precio" id="precx" class="form-control" placeholder="Ingrese precio" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="control-label col-sm-2" for="img">Imagen:</label>
+                                <input type="file" class="form-control-file" id="imgx" name="img">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="return Actualizar()" type="button" class="btn btn-warning">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <div th:include="administrador/menuAdmin.html::footer">  </div>
+    </body>
+</html>
