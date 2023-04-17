@@ -32,7 +32,7 @@ public class Producto {
     private Usuario usuario;
     
     @ManyToOne()
-    @JoinColumn(name="categoria_id") //FK
+    @JoinColumn(name="id_categoria") //FK
     private Categoria categoria;
 
 	public Integer getId() {
