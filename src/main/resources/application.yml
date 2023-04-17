@@ -4,6 +4,9 @@ server:
 spring:
   thymeleaf:
     cache: false
+  jpa:
+    hibernate:
+      ddl-auto: update
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/tienda

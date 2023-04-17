@@ -55,8 +55,8 @@ public class UsuarioController {
         log.info("Usuario de db: {}", user.get());
 
         if (user.isPresent()) {
-            session.setAttribute("idUsuario", user.get().getId());
-            if (user.get().getTipo().equals("ADMIN")) {
+            session.setAttribute("id_usuario", user.get().getId());
+            if (user.get().getTipo().equals("ADMI")) {
                 return "redirect:/administrador";
             } else {
                 return "redirect:/";
@@ -71,11 +71,11 @@ public class UsuarioController {
     @GetMapping("/compras")
     public String obtenerCompras(Model model, HttpSession session) {
 
-        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
         List<Orden> ordenes = ordenService.findByUsuario(usuario);
 
         model.addAttribute("ordenes", ordenes);
-        model.addAttribute("sesion", session.getAttribute("idUsuario"));
+        model.addAttribute("sesion", session.getAttribute("id_usuario"));
 
         return "usuario/compras";
     }
@@ -87,14 +87,14 @@ public class UsuarioController {
         Optional<Orden> orden = ordenService.findById(id);
 
         model.addAttribute("detalles", orden.get().getDetalle());
-        model.addAttribute("sesion", session.getAttribute("idUsuario"));
+        model.addAttribute("sesion", session.getAttribute("id_usuario"));
 
         return "usuario/detalleCompra";
     }
 
     @GetMapping("/cerrar")
     public String cerrarSesion(HttpSession session) {
-        session.removeAttribute("idUsuario");
+        session.removeAttribute("id_usuario");
         return "redirect:/";
     }
 }

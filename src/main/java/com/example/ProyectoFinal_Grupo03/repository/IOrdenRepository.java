@@ -33,13 +33,13 @@ public interface IOrdenRepository extends CrudRepository<Orden, Integer>{
     List<Orden> OrderDesc();
     
     @Query(value="SELECT count(*) FROM Orden "
-            + "INNER JOIN detalle_orden ON Orden.id = detalle_orden.orden_id "
-            + "INNER JOIN Producto ON Producto.id = detalle_orden.producto_id "
+            + "INNER JOIN detalle_orden ON Orden.id = detalle_orden.id_orden "
+            + "INNER JOIN Producto ON Producto.id = detalle_orden.id_producto "
             + "WHERE detalle_orden.producto_id = ?1",nativeQuery=true)
     int VentasPorProducto(Integer id);
     
     @Query(value="SELECT count(*) FROM orden "
-            + "INNER JOIN usuario ON orden.usuario_id=usuario.id "
+            + "INNER JOIN usuario ON orden.id_usuario=usuario.id "
             + "WHERE orden.usuario_id= ?1 ",nativeQuery=true)
     int VentasPorCliente(Integer id);
 }

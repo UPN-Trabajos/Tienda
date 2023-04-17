@@ -47,27 +47,27 @@ public class HomeController {
 
     @GetMapping("")
     public String Home(Model model, HttpSession session) {
-        log.info("Sesion del usuario: {}", session.getAttribute("idUsuario"));
+        log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
         
         //session
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         return "usuario/UsuarioHome";
     }
 
     @GetMapping("/celulares")
     public String celulares(Model model, HttpSession session) {
-        log.info("Sesion del usuario: {}", session.getAttribute("idUsuario"));
+        log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
         List<Producto> productos = productoService.ListarPorCategoria("Celular");
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         model.addAttribute("productos", productos);
         return "usuario/celulares";
     }
     
     @GetMapping("/cases")
     public String cases(Model model, HttpSession session) {
-        log.info("Sesion del usuario: {}", session.getAttribute("idUsuario"));
+        log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
         List<Producto> productos = productoService.ListarPorCategoria("Cases");
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         model.addAttribute("productos", productos);
         return "usuario/celulares";
     }
@@ -80,7 +80,7 @@ public class HomeController {
         producto = productoOptional.get();
 
         model.addAttribute("producto", producto);
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         return "usuario/productoHome";
     }
 
@@ -114,7 +114,7 @@ public class HomeController {
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
 
         return "usuario/carrito";
     }
@@ -138,7 +138,7 @@ public class HomeController {
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
 
         return "usuario/carrito";
     }
@@ -149,13 +149,13 @@ public class HomeController {
         model.addAttribute("orden", orden);
         
         //session
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         return "/usuario/carrito";
     }
 
     @GetMapping("/order")
     public String order(Model model, HttpSession session) {
-        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         model.addAttribute("usuario", usuario);
@@ -169,7 +169,7 @@ public class HomeController {
         orden.setFechaCreacion(fechaCreacion);
         orden.setNumero(ordenService.generarNumeroOrden());
 
-        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+        Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
         orden.setUsuario(usuario);
 
         ordenService.Guardar(orden);
@@ -193,7 +193,7 @@ public class HomeController {
         
         List<Producto> productos = productoService.Buscar(dato);
         model.addAttribute("productos", productos);
-        model.addAttribute("sesion",session.getAttribute("idUsuario"));
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         
         return "usuario/celulares";
     }

@@ -1,6 +1,7 @@
 
 package com.example.ProyectoFinal_Grupo03.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,9 @@ public class Categoria {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY) //Autoincremental
+    @Column(name = "id_categoria")
     private int id_categoria;
+    @Column(name = "nombre")
     private String nombre;
 	public int getId() {
 		return id_categoria;

@@ -40,6 +40,7 @@ public class AdministradorController {
     @GetMapping("")
     public String home(Model model) {
         List<Producto> productos = productoService.Listar();
+//        System.out.print(productos);
         model.addAttribute("productos", productos);
         return "administrador/home";
     }
@@ -85,7 +86,7 @@ public class AdministradorController {
         model.addAttribute("detalles", orden.get().getDetalle());
 
         //session
-        model.addAttribute("session", session.getAttribute("idUsuario"));
+        model.addAttribute("session", session.getAttribute("id_usuario"));
 
         return "administrador/detalleOrden";
     }

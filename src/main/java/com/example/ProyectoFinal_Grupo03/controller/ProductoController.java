@@ -63,7 +63,7 @@ public class ProductoController {
         p.setPrecio(prec);
         p.setCategoria(cat);
 
-        Usuario u = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
+        Usuario u = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
         p.setUsuario(u);
         LOGGER.info("Producto guardado: {}", p);
 
