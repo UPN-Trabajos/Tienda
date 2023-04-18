@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,10 +21,10 @@ public class Orden {
     private int id_orden;
     private String numero;
     private Date fechaCreacion;
-    private Date fechaRecibida;
     private double total;
     
     @ManyToOne
+    @JoinColumn(name="id_usuario") //FK
     private Usuario usuario;
     
     @OneToMany(mappedBy="orden")
@@ -51,14 +52,6 @@ public class Orden {
 
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
-	}
-
-	public Date getFechaRecibida() {
-		return fechaRecibida;
-	}
-
-	public void setFechaRecibida(Date fechaRecibida) {
-		this.fechaRecibida = fechaRecibida;
 	}
 
 	public double getTotal() {

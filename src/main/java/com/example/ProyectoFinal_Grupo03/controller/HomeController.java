@@ -89,6 +89,8 @@ public class HomeController {
         DetalleOrden detalleOrden = new DetalleOrden();
         Producto producto = new Producto();
         double sumaTotal = 0;
+        
+        log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
 
         Optional<Producto> optionalProducto = productoService.ConsultarId(id);
         log.info("Producto añadido: {}", optionalProducto.get());
@@ -145,6 +147,8 @@ public class HomeController {
 
     @GetMapping("/getCart")
     public String getCart(Model model, HttpSession session) {
+    	log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
+    	
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
         
@@ -155,9 +159,12 @@ public class HomeController {
 
     @GetMapping("/order")
     public String order(Model model, HttpSession session) {
+    	log.info("Sesion del usuario: {}", session.getAttribute("id_usuario"));
         Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
+        log.info("usuario orden:" + usuario.toString());
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
         model.addAttribute("usuario", usuario);
         
         return "usuario/resumenOrden";
@@ -165,16 +172,18 @@ public class HomeController {
 
     @GetMapping("/saveOrder")
     public String SaveOrder(HttpSession session) {
+    	log.info("Sesion del usuario saveOrder: {}", session.getAttribute("id_usuario"));
         Date fechaCreacion = new Date();
         orden.setFechaCreacion(fechaCreacion);
         orden.setNumero(ordenService.generarNumeroOrden());
 
         Usuario usuario = usuarioService.ConsultarId(Integer.parseInt(session.getAttribute("id_usuario").toString())).get();
         orden.setUsuario(usuario);
+        log.info("setUsuario saveOrder: {}", orden.getUsuario().getId());
 
         ordenService.Guardar(orden);
 
-        //Guardar Detalles
+//        Guardar Detalles
         for (DetalleOrden dt : detalles) {
             dt.setOrden(orden);
             detalleOrdenService.Guardar(dt);

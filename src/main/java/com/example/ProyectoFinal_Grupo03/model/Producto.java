@@ -29,6 +29,7 @@ public class Producto {
     }
     
     @ManyToOne
+    @JoinColumn(name="id_usuario") //FK
     private Usuario usuario;
     
     @ManyToOne()
