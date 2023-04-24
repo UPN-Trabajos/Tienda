@@ -26,139 +26,140 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/administrador")
 public class AdministradorController {
 
-    @Autowired //Permite declarar variable tipo interfaz
-    private IProductoService productoService; //Permite acceder a los metodos
+	@Autowired // Permite declarar variable tipo interfaz
+	private IProductoService productoService; // Permite acceder a los metodos
 
-    @Autowired //Permite declarar variable tipo interfaz
-    private IUsuarioService usuarioService; //Permite acceder a los metodos
+	@Autowired // Permite declarar variable tipo interfaz
+	private IUsuarioService usuarioService; // Permite acceder a los metodos
 
-    @Autowired //Permite declarar variable tipo interfaz
-    private IOrdenService ordenService; //Permite acceder a los metodos
+	@Autowired // Permite declarar variable tipo interfaz
+	private IOrdenService ordenService; // Permite acceder a los metodos
 
-    private Logger log = LoggerFactory.getLogger(AdministradorController.class);
+	private Logger log = LoggerFactory.getLogger(AdministradorController.class);
 
-    @GetMapping("")
-    public String home(Model model) {
-        List<Producto> productos = productoService.Listar();
+	@GetMapping("")
+	public String home(Model model) {
+		List<Producto> productos = productoService.Listar();
 //        System.out.print(productos);
-        model.addAttribute("productos", productos);
-        return "administrador/home";
-    }
+		model.addAttribute("productos", productos);
+		return "administrador/home";
+	}
 
-    @PostMapping("/buscarProductos")
-    public String SeachProduct(@RequestParam("dato") String dato, Model model) {
-        List<Producto> productos = productoService.Buscar(dato);
-        model.addAttribute("productos", productos);
+	@PostMapping("/buscarProductos")
+	public String SeachProduct(@RequestParam("dato") String dato, Model model) {
+		List<Producto> productos = productoService.Buscar(dato);
+		model.addAttribute("productos", productos);
 
-        return "administrador/home";
-    }
+		return "administrador/home";
+	}
 
-    @GetMapping("/usuarios")
-    public String usuarios(Model model) {
-        model.addAttribute("usuarios", usuarioService.Listar());
-        return "administrador/usuarios";
-    }
+	@GetMapping("/usuarios")
+	public String usuarios(Model model) {
+		model.addAttribute("usuarios", usuarioService.Listar());
+		return "administrador/usuarios";
+	}
 
-    @GetMapping("/ordenes")
-    public String ordenes(Model model) {
-        model.addAttribute("ordenes", ordenService.FindAll());
+	@GetMapping("/ordenes")
+	public String ordenes(Model model) {
+		List<Orden> ordenes = ordenService.FindAll();
+		log.info("ordenes: {}", ordenes);
+		model.addAttribute("ordenes", ordenes);
+//
+		Reporte r = new Reporte();
 
-        Reporte r = new Reporte();
+		if (ordenes.size() > 0) {
+			float m = ordenService.montoTotal();
+			r.setCantidadTotal(ordenService.cantidadOrdenes());
+			r.setMontoTotal(m);
+		}
 
-        List<Orden> ordenes = ordenService.FindAll();
-        if (ordenes.size() > 0) {
-            float m = ordenService.montoTotal();
-            r.setCantidadTotal(ordenService.cantidadOrdenes());
-            r.setMontoTotal(m);
-        }
+		model.addAttribute("reporte", r);
 
-        model.addAttribute("reporte", r);
+		return "administrador/ordenes";
+	}
 
-        return "administrador/ordenes";
-    }
+	@GetMapping("/detalle/{id}")
+	public String detalle(Model model, @PathVariable Integer id, HttpSession session) {
+		log.info("id de la orden: {}", id);
 
-    @GetMapping("/detalle/{id}")
-    public String detalle(Model model, @PathVariable Integer id, HttpSession session) {
-        log.info("id de la orden: {}", id);
+		Optional<Orden> orden = ordenService.findById(id);
 
-        Optional<Orden> orden = ordenService.findById(id);
+		model.addAttribute("detalles", orden.get().getDetalle());
 
-        model.addAttribute("detalles", orden.get().getDetalle());
+		// session
+		model.addAttribute("session", session.getAttribute("id_usuario"));
 
-        //session
-        model.addAttribute("session", session.getAttribute("id_usuario"));
+		return "administrador/detalleOrden";
+	}
 
-        return "administrador/detalleOrden";
-    }
+	@PostMapping("/buscarOrdenes")
+	public String SeachDate(@RequestParam("dato") String dato, Model model) {
+		List<Orden> ordenes = ordenService.findByDate(dato);
+		model.addAttribute("ordenes", ordenes);
 
-    @PostMapping("/buscarOrdenes")
-    public String SeachDate(@RequestParam("dato") String dato, Model model) {
-        List<Orden> ordenes = ordenService.findByDate(dato);
-        model.addAttribute("ordenes", ordenes);
+		Reporte r = new Reporte();
+		float m = ordenService.montoTotal();
+		r.setCantidadTotal(ordenService.cantidadOrdenes());
+		r.setMontoTotal(m);
+		model.addAttribute("reporte", r);
 
-        Reporte r = new Reporte();
-        float m = ordenService.montoTotal();
-        r.setCantidadTotal(ordenService.cantidadOrdenes());
-        r.setMontoTotal(m);
-        model.addAttribute("reporte", r);
+		return "administrador/ordenes";
+	}
 
-        return "administrador/ordenes";
-    }
+	@GetMapping("/orden_asc")
+	public String OrdenarAsc(Model model) {
+		List<Orden> ordenes = ordenService.OrderAsc();
+		model.addAttribute("ordenes", ordenes);
 
-    @GetMapping("/orden_asc")
-    public String OrdenarAsc(Model model) {
-        List<Orden> ordenes = ordenService.OrderAsc();
-        model.addAttribute("ordenes", ordenes);
+		Reporte r = new Reporte();
+		float m = ordenService.montoTotal();
+		r.setCantidadTotal(ordenService.cantidadOrdenes());
+		r.setMontoTotal(m);
+		model.addAttribute("reporte", r);
 
-        Reporte r = new Reporte();
-        float m = ordenService.montoTotal();
-        r.setCantidadTotal(ordenService.cantidadOrdenes());
-        r.setMontoTotal(m);
-        model.addAttribute("reporte", r);
+		return "administrador/ordenes";
+	}
 
-        return "administrador/ordenes";
-    }
+	@GetMapping("/orden_desc")
+	public String OrdenarDesc(Model model) {
+		List<Orden> ordenes = ordenService.OrderDesc();
+		model.addAttribute("ordenes", ordenes);
 
-    @GetMapping("/orden_desc")
-    public String OrdenarDesc(Model model) {
-        List<Orden> ordenes = ordenService.OrderDesc();
-        model.addAttribute("ordenes", ordenes);
+		Reporte r = new Reporte();
+		float m = ordenService.montoTotal();
+		r.setCantidadTotal(ordenService.cantidadOrdenes());
+		r.setMontoTotal(m);
+		model.addAttribute("reporte", r);
 
-        Reporte r = new Reporte();
-        float m = ordenService.montoTotal();
-        r.setCantidadTotal(ordenService.cantidadOrdenes());
-        r.setMontoTotal(m);
-        model.addAttribute("reporte", r);
+		return "administrador/ordenes";
+	}
 
-        return "administrador/ordenes";
-    }
+	@GetMapping("/reporte")
+	public String ReporteGrafico(Model model) {
+		Map<String, Integer> graphData = new TreeMap<>();
 
-    @GetMapping("/reporte")
-    public String ReporteGrafico(Model model) {
-        Map<String, Integer> graphData = new TreeMap<>();
+		List<Producto> productos = productoService.Listar();
+		for (int i = 0; i < productos.size(); i++) {
+			int id = productos.get(i).getId();
+			String nom = productos.get(i).getNombre();
+			int cant = ordenService.VentasPorProducto(id);
+			graphData.put(nom, cant);
+		}
+		model.addAttribute("graphData", graphData);
 
-        List<Producto> productos = productoService.Listar();
-        for (int i = 0; i < productos.size(); i++) {
-            int id = productos.get(i).getId();
-            String nom = productos.get(i).getNombre();
-            int cant = ordenService.VentasPorProducto(id);
-            graphData.put(nom, cant);
-        }
-        model.addAttribute("graphData", graphData);
+		Map<String, Integer> graphData2 = new TreeMap<>();
 
-        Map<String, Integer> graphData2 = new TreeMap<>();
+		List<Usuario> usuarios = usuarioService.ListarTipo("USER");
+		for (int i = 0; i < usuarios.size(); i++) {
+			int id = usuarios.get(i).getId();
+			String nom = usuarios.get(i).getNombre();
+			int cant = ordenService.VentasPorCliente(id);
+			graphData2.put(nom, cant);
+		}
+		System.out.println(graphData2);
 
-        List<Usuario> usuarios = usuarioService.ListarTipo("USER");
-        for (int i = 0; i < usuarios.size(); i++) {
-            int id = usuarios.get(i).getId();
-            String nom = usuarios.get(i).getNombre();
-            int cant = ordenService.VentasPorCliente(id);
-            graphData2.put(nom, cant);
-        }
-        System.out.println(graphData2);
+		model.addAttribute("graphData2", graphData2);
 
-        model.addAttribute("graphData2", graphData2);
-
-        return "administrador/reporte"; //grafico.html
-    }
+		return "administrador/reporte"; // grafico.html
+	}
 }

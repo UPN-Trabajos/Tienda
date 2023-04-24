@@ -15,7 +15,7 @@ public interface IOrdenRepository extends CrudRepository<Orden, Integer>{
             ,nativeQuery=true)
     float montoTotal();
     
-    @Query(value="SELECT count(id) FROM Orden "
+    @Query(value="SELECT count(id_orden) FROM Orden "
             ,nativeQuery=true)
     int cantidadOrdenes();
     
@@ -33,13 +33,13 @@ public interface IOrdenRepository extends CrudRepository<Orden, Integer>{
     List<Orden> OrderDesc();
     
     @Query(value="SELECT count(*) FROM Orden "
-            + "INNER JOIN detalle_orden ON Orden.id = detalle_orden.id_orden "
-            + "INNER JOIN Producto ON Producto.id = detalle_orden.id_producto "
-            + "WHERE detalle_orden.producto_id = ?1",nativeQuery=true)
+            + "INNER JOIN detalle_orden ON Orden.id_orden = detalle_orden.id_orden "
+            + "INNER JOIN Producto ON Producto.id_producto = detalle_orden.id_producto "
+            + "WHERE detalle_orden.id_producto = ?1",nativeQuery=true)
     int VentasPorProducto(Integer id);
     
     @Query(value="SELECT count(*) FROM orden "
-            + "INNER JOIN usuario ON orden.id_usuario=usuario.id "
-            + "WHERE orden.usuario_id= ?1 ",nativeQuery=true)
+            + "INNER JOIN usuario ON orden.id_usuario=usuario.id_usuario "
+            + "WHERE orden.id_usuario= ?1 ",nativeQuery=true)
     int VentasPorCliente(Integer id);
 }
