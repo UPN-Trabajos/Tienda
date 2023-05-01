@@ -25,10 +25,11 @@ public class Producto {
 
     public String toString() {
         return "Producto [id_producto="+id_producto+", nombre="+nombre+", descripcion="+descripcion+", imagen="+imagen
-                +", precio="+precio+", cantidad="+cantidad+", categoria="+categoria+"]";
+                +", precio="+precio+", cantidad="+cantidad+", categoria="+categoria.getNombre()
+                +"]";
     }
     
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name="id_usuario") //FK
     private Usuario usuario;
     

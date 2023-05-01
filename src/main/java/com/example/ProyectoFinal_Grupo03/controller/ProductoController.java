@@ -85,7 +85,9 @@ public class ProductoController {
             @RequestParam("precio") float prec,
             @RequestParam("cat") Categoria cat,
             @RequestParam("img") MultipartFile file,
-            Model model) throws IOException {
+            Model model,
+            HttpSession session) throws IOException {
+    	
         Producto p = new Producto();
         p.setId(id);
         p.setNombre(nom);
@@ -93,12 +95,13 @@ public class ProductoController {
         p.setCantidad(cant);
         p.setPrecio(prec);
         p.setCategoria(cat);
+        System.out.println("form producto: "+p);
 
         Producto pr = new Producto();
         pr = productoService.ConsultarId(p.getId()).get();
-        System.out.print(pr);
+        System.out.println("consultar id producto: "+pr);
         if (file.isEmpty()) {//se edita el producto, pero no se cambia la imagen
-            p.setImagen(p.getImagen());
+            p.setImagen(pr.getImagen());
         } else { //cuando se edita la imagen
             //eliminar cuando no sea la imagen por defecto
             if (!pr.getImagen().equals("default.jpg")) {
@@ -107,7 +110,8 @@ public class ProductoController {
             String nombreImagen = upload.saveImage(file);
             p.setImagen(nombreImagen);
         }
-        p.setUsuario(p.getUsuario());
+        System.out.println(pr.getUsuario());
+        p.setUsuario(pr.getUsuario());
 
         productoService.Guardar(p);
 
