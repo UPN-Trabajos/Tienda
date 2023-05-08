@@ -23,7 +23,36 @@ public class Producto {
     private double precio;
     private int cantidad;
 
-    public String toString() {
+    public Producto() {
+		super();
+	}
+
+	public Producto(String nombre, String descripcion, String imagen, double precio, int cantidad, Usuario usuario,
+			Categoria categoria) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.imagen = imagen;
+		this.precio = precio;
+		this.cantidad = cantidad;
+		this.usuario = usuario;
+		this.categoria = categoria;
+	}
+
+	public Producto(Integer id_producto, String nombre, String descripcion, String imagen, double precio, int cantidad,
+			Usuario usuario, Categoria categoria) {
+		super();
+		this.id_producto = id_producto;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.imagen = imagen;
+		this.precio = precio;
+		this.cantidad = cantidad;
+		this.usuario = usuario;
+		this.categoria = categoria;
+	}
+
+	public String toString() {
         return "Producto [id_producto="+id_producto+", nombre="+nombre+", descripcion="+descripcion+", imagen="+imagen
                 +", precio="+precio+", cantidad="+cantidad+", categoria="+categoria.getNombre()
                 +"]";
