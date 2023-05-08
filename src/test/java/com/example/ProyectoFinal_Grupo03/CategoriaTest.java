@@ -26,5 +26,12 @@ public class CategoriaTest {
 	public void testBuscarCategoria() {
 		List<Categoria> categorias = repo.buscarPorTodo("Cel");
 	}
+	
+	@Test
+	public void testActualizarCategoria() {
+		Categoria c = new Categoria(3, "Case para Celulares");
+		repo.save(c);
+	}
+
 
 }
