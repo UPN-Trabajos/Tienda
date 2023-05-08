@@ -24,13 +24,31 @@ public class CategoriaTest {
 	
 	@Test
 	public void testBuscarCategoria() {
-		List<Categoria> categorias = repo.buscarPorTodo("Cel");
+		repo.buscarPorTodo("Cel");
+	}
+	
+	public void testBuscarCategoriaPorID() {
+		testGuardarCategoria();
+		repo.findById(1);
 	}
 	
 	@Test
 	public void testActualizarCategoria() {
-		Categoria c = new Categoria(3, "Case para Celulares");
+		testGuardarCategoria();
+		Categoria c = new Categoria(1, "Case para Celulares");
 		repo.save(c);
+	}
+	
+	@Test
+	public void testEliminarCategoria() {
+		testGuardarCategoria();
+		repo.deleteById(1);
+	}
+	
+	@Test
+	public void testListarCategoria() {
+		testGuardarCategoria();
+		repo.findAll();
 	}
 
 
