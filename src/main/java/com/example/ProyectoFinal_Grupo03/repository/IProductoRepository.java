@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository //sirve como repositorio en la BD
                                    //Metodos para el CRUD
 public interface IProductoRepository extends CrudRepository<Producto, Integer>{ 
-    //Aqui se pueden crear otros metodos
-    @Query(value="SELECT * FROM producto "
-            + "INNER JOIN categoria ON producto.id_categoria = categoria.id_categoria "
-            + "WHERE producto.nombre LIKE %?1% ",nativeQuery=true)
-    List<Producto> buscarPorTodo(String dato);
+	@Query(value="SELECT * FROM producto "
+	        + "INNER JOIN categoria ON producto.id_categoria = categoria.id_categoria "
+	        + "WHERE LOWER(producto.nombre) LIKE LOWER(CONCAT('%', ?1, '%')) ",nativeQuery=true)
+	List<Producto> buscarPorTodo(String dato);
+
     
     @Query(value="SELECT * FROM producto "
             + "INNER JOIN categoria ON producto.id_categoria = categoria.id_categoria "
