@@ -1,8 +1,10 @@
 package com.example.ProyectoFinal_Grupo03.controller;
 
 import com.example.ProyectoFinal_Grupo03.model.Orden;
+import com.example.ProyectoFinal_Grupo03.model.Suscripcion;
 import com.example.ProyectoFinal_Grupo03.model.Usuario;
 import com.example.ProyectoFinal_Grupo03.service.IOrdenService;
+import com.example.ProyectoFinal_Grupo03.service.ISuscripcionService;
 import com.example.ProyectoFinal_Grupo03.service.IUsuarioService;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,9 @@ public class UsuarioController {
 
     @Autowired
     private IOrdenService ordenService;
+    
+    @Autowired
+    private ISuscripcionService suscripcionService;
 
     private final Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
@@ -59,6 +64,16 @@ public class UsuarioController {
         	return "usuario/SignUp";
         }
         
+    }
+    
+    @PostMapping("/saveSuscripcion")
+    public String saveSuscripcion(Suscripcion suscripcion) {
+        log.info("suscripcion registro: {}", suscripcion);
+        String email = suscripcion.getEmail();
+        if(email!="") {
+        	suscripcionService.Guardar(suscripcion);
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/login")
