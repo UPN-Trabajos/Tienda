@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICategoriaRepository extends CrudRepository<Categoria,Integer> {
     
-    @Query(value="SELECT * FROM categoria "
-            + "WHERE nombre LIKE %?1% "
+	@Query(value="SELECT * FROM categoria "
+            + "WHERE LOWER(nombre) LIKE LOWER(CONCAT('%', ?1, '%')) "
             ,nativeQuery=true)
     List<Categoria> buscarPorTodo(String dato);
     
