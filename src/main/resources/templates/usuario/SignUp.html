@@ -32,11 +32,11 @@
                     <br/> <br/>
                     <h1 class="mb-3 text-warning text-center">Sign Up</h1>
                     <br/>
-                    <form class="needs-validation" >
+                    <form th:action="@{/usuario/save}" method="post" class="needs-validation" novalidate="">
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="nombre" class="form-label text-white">Nombres</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombres" required>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="" required>
                                 <div class="invalid-feedback">
                                     Se requiere un nombre válido.
                                 </div>
@@ -66,10 +66,10 @@
                                     <label for="inputPassword6" class="col-form-label text-white">Contraseña</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpInline" required>
+                                    <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpInline">
                                 </div>
                                 <div class="col-auto">
-                                    <span id="passwordHelpInline" class="form-text" style="color:#BABABA" >
+                                    <span id="passwordHelpInline" class="form-text" style="color:#BABABA">
                                         Debe tener 8-20 caracteres de largo.
                                     </span>
                                 </div>
@@ -77,7 +77,7 @@
 
                             <div class="col-12">
                                 <label for="username" class="form-label text-white">Telefono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" required>
+                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="" required>
                                 <div class="invalid-feedback">
                                     Teléfono requerido.
                                 </div>
@@ -144,7 +144,7 @@
 
                             <div class="col-md-6">
                                 <label for="zip" class="form-label text-white">Zip</label>
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Código Zip requerido.
                                 </div>
