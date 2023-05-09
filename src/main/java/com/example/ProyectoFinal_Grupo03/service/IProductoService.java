@@ -12,6 +12,8 @@ public interface IProductoService {
     public void Guardar(Producto p); //Tambien se usa para actualizar
     public void Eliminar (int id);
     public List<Producto> Buscar(String dato);
+    public List<Producto> BuscarCelulares(String dato);
+    public List<Producto> BuscarCases(String dato);
     public List<Producto> OrdenAscendente();
     public List<Producto> OrdenDescendente();
 }

@@ -52,4 +52,14 @@ public class ProductoServiceImpl implements IProductoService{
     public List<Producto> ListarPorCategoria(String dato) {
         return data.ListarPorCategoria(dato);
     }
+
+	@Override
+	public List<Producto> BuscarCelulares(String dato) {
+		 return data.buscarCelulares(dato);
+	}
+
+	@Override
+	public List<Producto> BuscarCases(String dato) {
+		 return data.buscarCases(dato);
+	}
 }
