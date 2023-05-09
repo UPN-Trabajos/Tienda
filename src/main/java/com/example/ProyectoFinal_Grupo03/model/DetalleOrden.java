@@ -23,7 +23,35 @@ public class DetalleOrden {
     private double precio;
     private double total;
     
-    @ManyToOne
+    public DetalleOrden() {
+		super();
+	}
+    
+	public DetalleOrden(String nombre, int cantidad, double precio, double total, Orden orden, Producto producto) {
+		super();
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+		this.precio = precio;
+		this.total = total;
+		this.orden = orden;
+		this.producto = producto;
+	}
+
+	public DetalleOrden(int id_detalle_orden, String nombre, int cantidad, double precio, double total, Orden orden,
+			Producto producto) {
+		super();
+		this.id_detalle_orden = id_detalle_orden;
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+		this.precio = precio;
+		this.total = total;
+		this.orden = orden;
+		this.producto = producto;
+	}
+
+
+
+	@ManyToOne
     @JoinColumn(name="id_orden") //FK
     private Orden orden;
     

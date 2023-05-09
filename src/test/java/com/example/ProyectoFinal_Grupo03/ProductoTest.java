@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.example.ProyectoFinal_Grupo03.model.Categoria;
+import com.example.ProyectoFinal_Grupo03.model.DetalleOrden;
 import com.example.ProyectoFinal_Grupo03.model.Producto;
 import com.example.ProyectoFinal_Grupo03.model.Usuario;
 import com.example.ProyectoFinal_Grupo03.repository.ICategoriaRepository;
@@ -38,6 +39,7 @@ public class ProductoTest {
 
 		Producto p = new Producto("Xiaomi", "Negro", "A_53", 1235.4, 3, u, c);
 		repoProducto.save(p);
+		
 	}
 	
 	@Test
@@ -78,5 +80,12 @@ public class ProductoTest {
 	        System.out.println(producto.toString());
 	    }
 	}
+	
+//	@Test
+//	public void testGuardarOrden() {
+//		Producto pro = testGuardarProducto();
+//		
+//		DetalleOrden do = new DetalleOrden();
+//	}
 	
 }

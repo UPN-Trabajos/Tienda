@@ -7,8 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.example.ProyectoFinal_Grupo03.model.DetalleOrden;
 import com.example.ProyectoFinal_Grupo03.model.Orden;
+import com.example.ProyectoFinal_Grupo03.model.Producto;
 import com.example.ProyectoFinal_Grupo03.model.Usuario;
+import com.example.ProyectoFinal_Grupo03.repository.IDetalleOrdenRepository;
 import com.example.ProyectoFinal_Grupo03.repository.IOrdenRepository;
 import com.example.ProyectoFinal_Grupo03.repository.IUsuarioRepository;
 
@@ -19,6 +22,9 @@ public class UsuarioTest {
 	
 	@Autowired
     private IOrdenRepository repoOrden;
+	
+	@Autowired
+    private IDetalleOrdenRepository repoDetalle;
 	
 	@Test
 	public void testGuardarUsuario() {
@@ -41,4 +47,13 @@ public class UsuarioTest {
 		Optional<Orden> orden =repoOrden.findById(1);
 //		orden.get().getDetalle();
 	}
+	
+	@Test
+	public void testDetalleOrden() {
+		testGuardarUsuario();
+		testObtenerCompras();
+		Optional<Orden> orden =repoOrden.findById(1);
+//		orden.get().getDetalle();
+	}
 }
+	

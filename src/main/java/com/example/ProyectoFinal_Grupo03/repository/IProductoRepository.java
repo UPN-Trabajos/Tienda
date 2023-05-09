@@ -12,11 +12,7 @@ public interface IProductoRepository extends CrudRepository<Producto, Integer>{
     //Aqui se pueden crear otros metodos
     @Query(value="SELECT * FROM producto "
             + "INNER JOIN categoria ON producto.id_categoria = categoria.id_categoria "
-            + "WHERE producto.nombre LIKE %?1% "
-            + "OR descripcion LIKE %?1% "
-            + "OR cantidad LIKE %?1% "
-            + "OR precio LIKE %?1% "
-            + "OR categoria.nombre LIKE %?1%",nativeQuery=true)
+            + "WHERE producto.nombre LIKE %?1% ",nativeQuery=true)
     List<Producto> buscarPorTodo(String dato);
     
     @Query(value="SELECT * FROM producto "
