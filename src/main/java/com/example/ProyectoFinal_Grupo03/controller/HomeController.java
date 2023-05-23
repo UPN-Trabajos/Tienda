@@ -69,7 +69,7 @@ public class HomeController {
         List<Producto> productos = productoService.ListarPorCategoria("Cases");
         model.addAttribute("sesion",session.getAttribute("id_usuario"));
         model.addAttribute("productos", productos);
-        return "usuario/celulares";
+        return "usuario/cases";
     }
 
     @GetMapping("/productoHome/{id}")
@@ -196,14 +196,25 @@ public class HomeController {
         return "redirect:/";
     }
     
-    @PostMapping("/search")
-    public String SeachProduct(@RequestParam("dato") String dato,Model model, HttpSession session){
+    @PostMapping("/searchCelulares")
+    public String SeachProductCel(@RequestParam("dato") String dato,Model model, HttpSession session){
         log.info("Nombre del producto: {}", dato);
         
-        List<Producto> productos = productoService.Buscar(dato);
+        List<Producto> productos = productoService.BuscarCelulares(dato);
         model.addAttribute("productos", productos);
         model.addAttribute("sesion",session.getAttribute("id_usuario"));
         
         return "usuario/celulares";
+    }
+    
+    @PostMapping("/searchCases")
+    public String SeachProductCases(@RequestParam("dato") String dato,Model model, HttpSession session){
+        log.info("Nombre del producto: {}", dato);
+        
+        List<Producto> productos = productoService.BuscarCases(dato);
+        model.addAttribute("productos", productos);
+        model.addAttribute("sesion",session.getAttribute("id_usuario"));
+        
+        return "usuario/cases";
     }
 }
